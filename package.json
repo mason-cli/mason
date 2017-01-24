@@ -8,7 +8,7 @@
     "build": "babel src -d lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "bin": { "mason": "./lib/cli.js" },
+  "bin": { "mason": "./bin/mason.js" },
   "author": "",
   "license": "ISC",
   "dependencies": {

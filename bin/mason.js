@@ -1,7 +1,9 @@
+#!/usr/bin/env babel-node
+
 'use strict'
 
-import Mason from './index'
-import Arguments from './cli/Arguments'
+import Mason from '../lib/index'
+import Arguments from '../lib/cli/Arguments'
 
 try {
 	let input = new Arguments();
