@@ -1,6 +1,6 @@
 export default class Arguments {
 	constructor(skip=0) {
-		this._command = 'help';
+		this._command = '';
 		this._bin = false;
 		this._file = false;
 		this._args = [];

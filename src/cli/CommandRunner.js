@@ -20,7 +20,7 @@ export default class CommandRunner {
 			return this.commands.get(name);
 		}
 
-		throw {message:"No command found for " + name};
+		throw {message:"Command not found" + (name ? ": '" + name + "'" : "")};
 	}
 
 	run(cmd, options) {

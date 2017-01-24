@@ -19,14 +19,6 @@ export default (Mason) => {
 		}
 	}
 
-	class ScaffoldCommand extends Command {
-		run(resolve, reject) {
-			console.log('Scaffold', this.conf);
-			resolve();
-		}
-	}
-
 	Mason.registerCommand('help', HelpCommand);
 	Mason.registerCommand('version', VersionCommand);
-  Mason.registerCommand('scaffold', ScaffoldCommand);
 };

@@ -2,17 +2,21 @@
 
 'use strict'
 
-var Mason = require('../lib/index');
-var Arguments = require('../lib/cli/Arguments');
+const Mason = require('../lib/index.js').default;
+const Arguments = require('../lib/cli/Arguments').default;
 
 try {
 	var input = new Arguments();
 	Mason.run(input.command(), input.all());
 } catch(e) {
 	console.error('Error: ' + e.message);
-	console.log(e.stack);
+	if(e.stack) {
+		console.log(e.stack);
+	}
 }
 
 Mason.finally(() => {
-	console.log(' ');
+	// console.log(' ');
+}, () => {
+	console.error('Error!');
 });
