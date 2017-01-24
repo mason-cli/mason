@@ -1,0 +1,20 @@
+{
+  "name": "mason",
+  "version": "1.0.0",
+  "description": "Mason is a lightweight and modular scaffolding tool",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel-node lib/index.js",
+    "build": "babel src -d lib",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": { "mason": "./lib/cli.js" },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "colors": "^1.1.2",
+    "es6-promise": "^4.0.5"
+  }
+}
