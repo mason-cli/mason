@@ -8,9 +8,7 @@ const Mason = new CommandRunner();
 import builtins from './cli/Builtins'
 builtins(Mason);
 
-export default {
-	Mason: Mason,
-	Command: Command,
-	CommandRunner: CommandRunner,
-	Arguments: Arguments
-};
+module.exports.Mason = Mason;
+module.exports.Command = Command;
+module.exports.CommandRunner = CommandRunner;
+module.exports.Arguments = Arguments;

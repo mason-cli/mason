@@ -2,7 +2,7 @@
 
 'use strict'
 
-const mason = require('../lib/index.js').default;
+const mason = require('../lib/index.js');
 
 try {
 	var input = new mason.Arguments();
