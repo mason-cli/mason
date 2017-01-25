@@ -3,7 +3,7 @@ Mason is a modular command line toolkit written in ES6 with promises.
 
 # Installation
 For command line usage, install Mason globally:
-`npm install -g https://github.com/aewing/mason.git`
+`npm i -g mason.cli`
 
 # Configuration
 You can load additional plugins with Mason by creating a `mason.config.js` file in your project directory.
@@ -11,9 +11,10 @@ You can load additional plugins with Mason by creating a `mason.config.js` file 
 ### Example Configuration:
 ```
 module.exports = {
-  plugins: ['mason-scaffold', './path/to/LocalPlugin']
+  plugins: ['mason.plugin.scaffold', './path/to/LocalPlugin']
 };
 ```
+In this example, mason.plugin.scaffold is a package installed from NPM and './path/to/LocalPlugin' is the path of a local js module.
 
 # Usage
 By default, Mason currently comes with only two commands: `version` and `help`.
