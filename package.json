@@ -4,8 +4,9 @@
   "description": "Mason is a lightweight and modular scaffolding tool",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node lib/index.js",
     "build": "babel src -d lib",
+    "build-example": "babel example/src -d example/lib",
+    "example": "cd example && ./../bin/mason.js test",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": { "mason": "./bin/mason.js" },

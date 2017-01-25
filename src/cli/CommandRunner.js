@@ -2,7 +2,8 @@ import Promise from 'es6-promise'
 import Command from './Command'
 
 export default class CommandRunner {
-	constructor() {
+	constructor(config) {
+		this.config = config;
 		this.commands = new Map();
 		this.promises = [];
 	}
@@ -25,7 +26,7 @@ export default class CommandRunner {
 
 	run(cmd, options) {
 		let obj = this.getCommand(cmd);
-		let command = new obj(options);
+		let command = new obj(options, this.config);
 		if(command) {
 			let execution = new Promise(command.run);
 			this.promises.push(execution);
