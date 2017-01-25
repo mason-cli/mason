@@ -1,5 +1,5 @@
 {
-  "name": "mason",
+  "name": "mason.cli",
   "version": "0.0.2",
   "description": "Mason is a lightweight and modular scaffolding tool",
   "main": "index.js",
