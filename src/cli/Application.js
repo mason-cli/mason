@@ -1,6 +1,8 @@
 import Promise from 'es6-promise'
 import Command from './Command'
 
+import util from 'util'
+
 /**
  * Mason command line application class
  */
@@ -28,7 +30,7 @@ export default class Application {
 		if(runner.prototype instanceof Command) {
 			this.commands.set(name, runner);
 		} else {
-			throw {message:"Invalid command object registered: " + name};
+			throw "Invalid command object registered: " + name;
 		}
 	}
 
@@ -42,7 +44,7 @@ export default class Application {
 			return this.commands.get(name);
 		}
 
-		throw {message:"Command not found" + (name ? ": '" + name + "'" : "")};
+		throw "Command not found" + (name ? (": '" + name + "'") : "");
 	}
 
 	/**
@@ -130,12 +132,11 @@ export default class Application {
 				this.promises.push(execution);
 				return execution;
 			}
-			throw {message:"Invalid command requested: " + cmd};
+			throw "Invalid command requested: " + cmd;
 		} catch(e) {
-			console.log(e);
 			console.error('Error! ', e.message ? e.message : e);
 			if(e.stack) {
-				console.log(e.stack);
+				console.log(util.inspect(e.stack, false, null));
 			}
 		}
 	}

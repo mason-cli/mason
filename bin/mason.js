@@ -2,13 +2,15 @@
 
 'use strict'
 
-var fs = require('fs');
+const fs = require('fs');
+const util = require('util');
 
-var Application = require('../lib/cli/Application').default;
-var Input = require('../lib/cli/Input').default;
-var builtins = require('../lib/cli/Builtins').default;
+const Application = require('../lib/cli/Application').default;
+const Input = require('../lib/cli/Input').default;
+const builtins = require('../lib/cli/Builtins').default;
 
-var configPath = process.cwd() + '/mason.config.js';
+const configPath = process.cwd() + '/mason.config.js';
+
 var config = false;
 if(fs.existsSync(configPath)) {
 	config = require(configPath);
@@ -38,9 +40,9 @@ try {
 	var input = new Input();
 	Mason.run(input.command(), input.all(), config);
 } catch(e) {
-	console.error('Error: ' + e.message);
+	console.error('Error!', e.message ? e.message : e);
 	if(e.stack) {
-		console.log(e.stack);
+		console.log(util.inspect(e.stack, false, null));
 	}
 }
 
