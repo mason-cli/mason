@@ -1,19 +1,16 @@
 {
   "name": "mason.cli",
-  "version": "0.0.3",
-  "description": "Mason is a lightweight and modular scaffolding tool",
+  "version": "0.0.4",
+  "description": "Mason is a lightweight and modular command line toolkit.",
   "main": "index.js",
   "scripts": {
     "build": "babel src -d lib",
-    "build-example": "babel example/src -d example/lib",
-    "example": "cd example && ./../bin/mason.js test",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build-example": "babel example/src -d example/lib"
   },
   "bin": { "mason": "./bin/mason.js" },
   "author": "Andrew Ewing",
   "license": "ISC",
   "dependencies": {
-    "colors": "^1.1.2",
     "es6-promise": "^4.0.5"
   },
   "devDependencies": {

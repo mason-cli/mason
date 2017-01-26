@@ -1,3 +1,6 @@
+/**
+ * Mason command class
+ */
 export default class Command {
   constructor(input, conf, runner) {
     if(typeof(this.run) !== 'function') {

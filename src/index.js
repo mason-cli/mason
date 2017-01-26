@@ -1,9 +1,9 @@
 'use strict';
 
-import CommandRunner from './cli/CommandRunner'
+import Application from './cli/Application'
 import Command from './cli/Command'
-import Arguments from './cli/Arguments'
+import Input from './cli/Input'
 
+module.exports.Application = Application;
 module.exports.Command = Command;
-module.exports.CommandRunner = CommandRunner;
-module.exports.Arguments = Arguments;
+module.exports.Input = Input;

@@ -1,5 +1,10 @@
 import Command from './Command'
 
+/**
+ * Internal plugin to register all built-in Mason commands
+ * @param  {Mason} Mason The Mason instance
+ * @return {void}
+ */
 export default (Mason) => {
 	class VersionCommand extends Command {
 		get description() {
