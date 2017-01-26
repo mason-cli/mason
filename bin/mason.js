@@ -2,6 +2,8 @@
 
 'use strict'
 
+require('app-module-path').addPath(process.cwd() + '/node_modules');
+
 const fs = require('fs');
 const util = require('util');
 
