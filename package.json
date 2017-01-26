@@ -1,8 +1,8 @@
 {
   "name": "mason.cli",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Mason is a lightweight and modular command line toolkit.",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "babel src -d lib",
     "build-example": "babel example/src -d example/lib"
