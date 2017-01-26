@@ -27,7 +27,8 @@ export default class Application {
 	 * @return {void}
 	 */
 	registerCommand(name, runner) {
-		if(runner.prototype instanceof Command) {
+		// if(runner.prototype instanceof Command) { // TODO: Why doesn't this work?
+		if(typeof(runner) == 'function') {
 			this.commands.set(name, runner);
 		} else {
 			throw "Invalid command object registered: " + name;
@@ -36,15 +37,21 @@ export default class Application {
 
 	/**
 	 * Get a command class by name
-	 * @param  {string} name The name of the command
-	 * @return {Command}      The command class
+	 * @param  {string} name 		The name of the command
+	 * @param  {bool} gracefully 	Whether or not to fail gracefully
+	 * 
+	 * @return {Command}      		The command class
 	 */
-	getCommand(name) {
+	getCommand(name, gracefully) {
 		if(this.commands.has(name)) {
 			return this.commands.get(name);
 		}
 
-		throw "Command not found" + (name ? (": '" + name + "'") : "");
+		if(gracefully) {
+			return false;
+		} else {
+			throw "Command not found" + (name ? (": '" + name + "'") : "");
+		}
 	}
 
 	/**
@@ -126,7 +133,14 @@ export default class Application {
 	run(cmd, options) {
 		try {
 			let obj = this.getCommand(cmd);
-			let command = new obj(options, this.config, this);
+			let command = false;
+
+			try {
+				command = new obj(options, this.config, this);
+			} catch(e) {
+				throw "Invalid command object registered for " + cmd;
+			}
+
 			if(command) {
 				let execution = new Promise(command.run);
 				this.promises.push(execution);

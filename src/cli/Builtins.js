@@ -23,6 +23,19 @@ export default (Mason) => {
 		}
 
 		run(resolve, reject) {
+			if(this.input.args.length) {
+				let cmd = this.input.args[0];
+				let command = this.runner.getCommand(cmd, true);
+				if(command) {
+					console.log('Mason - ' + cmd + ' Help');
+					console.log('---------------------------');
+					command.help();
+					console.log('---------------------------');
+
+					return;
+				}
+			}
+			
 			console.log('Mason - Available Commands');
 			console.log('---------------------------');
 			this.runner.commands.forEach((cmd,name) => {

@@ -48,6 +48,6 @@ try {
 
 Mason.finally(() => {
 	// console.log(' ');
-}, () => {
-	console.error('Error!');
+}, (err) => {
+	console.error('Error!', util.inspect(err, false, null));
 });

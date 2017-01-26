@@ -11,4 +11,8 @@ export default class Command {
     this.runner = runner;
 	this.run = this.run.bind(this);
   }
+
+  static help() {
+  	console.log('No help text provided for this command');
+  }
 }
