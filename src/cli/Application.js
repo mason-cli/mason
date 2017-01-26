@@ -14,7 +14,7 @@ export default class Application {
 		this.config = config;
 		this.commands = new Map();
 		this.events = new Map();
-		this.pluginData = new Map();
+		this.data = new Map();
 		this.promises = [];
 	}
 
@@ -93,20 +93,51 @@ export default class Application {
 	}
 
 	/**
+	 * Reset all data when existing promises are fulfilled (SAFE)
+	 * @return {void}
+	 */
+	reset() {
+		this.finally(this.resetNow, this.resetNow);
+	}
+
+	/**
+	 * Reset all data now, including existing promises (UNSAFE)
+	 * @return {[type]} [description]
+	 */
+	resetNow() {
+		delete this.commands;
+		delete this.data;
+		delete this.events;
+		delete this.promises;
+		this.commands = new Map();
+		this.events = new Map();
+		this.data = new Map();
+		this.promises = [];
+	}
+
+	/**
 	 * Run a command
 	 * @param  {string} cmd     The command name
 	 * @param  {object} options The command properties
 	 * @return {mixed}			The command execution promise
 	 */
 	run(cmd, options) {
-		let obj = this.getCommand(cmd);
-		let command = new obj(options, this.config);
-		if(command) {
-			let execution = new Promise(command.run);
-			this.promises.push(execution);
-			return execution;
+		try {
+			let obj = this.getCommand(cmd);
+			let command = new obj(options, this.config, this);
+			if(command) {
+				let execution = new Promise(command.run);
+				this.promises.push(execution);
+				return execution;
+			}
+			throw {message:"Invalid command requested: " + cmd};
+		} catch(e) {
+			console.log(e);
+			console.error('Error! ', e.message ? e.message : e);
+			if(e.stack) {
+				console.log(e.stack);
+			}
 		}
-		throw "Invalid command requested: " + cmd;
 	}
 
 	/**

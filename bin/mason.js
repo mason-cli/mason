@@ -4,8 +4,8 @@
 
 var fs = require('fs');
 
-var CommandRunner = require('../lib/cli/CommandRunner').default;
-var Arguments = require('../lib/cli/Arguments').default;
+var Application = require('../lib/cli/Application').default;
+var Input = require('../lib/cli/Input').default;
 var builtins = require('../lib/cli/Builtins').default;
 
 var configPath = process.cwd() + '/mason.config.js';
@@ -13,10 +13,11 @@ var config = false;
 if(fs.existsSync(configPath)) {
 	config = require(configPath);
 } else {
-	console.info('Unable to locate configuration file at "' + configPath + '"');
+	console.info('WARNING: `mason.config.js` not found');
+	console.log('');
 }
 
-var Mason = new CommandRunner(config);
+var Mason = new Application(config);
 builtins(Mason);
 
 // Load plugins
@@ -34,7 +35,7 @@ if(config.plugins) {
 }
 
 try {
-	var input = new Arguments();
+	var input = new Input();
 	Mason.run(input.command(), input.all(), config);
 } catch(e) {
 	console.error('Error: ' + e.message);
