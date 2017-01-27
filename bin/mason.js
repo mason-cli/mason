@@ -6,29 +6,33 @@ require('app-module-path').addPath(process.cwd() + '/node_modules');
 
 const fs = require('fs');
 const util = require('util');
+const path = require('path');
 
 const Application = require('../lib/cli/Application').default;
 const Input = require('../lib/cli/Input').default;
 const builtins = require('../lib/cli/Builtins').default;
 
-const configPath = process.cwd() + '/mason.config.js';
+var Mason = new Application();
+builtins(Mason);
 
+const configPath = process.cwd() + '/mason.config.js';
 var config = false;
 if(fs.existsSync(configPath)) {
 	config = require(configPath);
+	if(typeof(config) == 'function') {
+		config = config(Mason);
+	}
+	Mason.setConfig(config);
 } else {
 	console.info('WARNING: `mason.config.js` not found');
 	console.log('');
 }
 
-var Mason = new Application(config);
-builtins(Mason);
-
 // Load plugins
 if(config.plugins) {
 	config.plugins.forEach((location) => {
-		if(location.substring(0, 2) == './') {
-			location = process.cwd() + '/' + location.substring(2);
+		if(location.substring(0, 2) == './' || location.substring(0, 2) == '.\\') {
+			location = process.cwd() + path.delimiter + location.substring(2);
 		}
 
 		let plugin = require(location);

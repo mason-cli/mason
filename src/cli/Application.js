@@ -1,5 +1,6 @@
 import Promise from 'es6-promise'
 import Command from './Command'
+import MethodCommand from './MethodCommand'
 
 import util from 'util'
 
@@ -12,12 +13,56 @@ export default class Application {
 	 * @param  {object} config The configuration object
 	 * @return {void}
 	 */
-	constructor(config) {
+	constructor(config={}) {
 		this.config = config;
 		this.commands = new Map();
 		this.events = new Map();
 		this.data = new Map();
 		this.promises = [];
+	}
+
+	/**
+	 * Get the current Mason version
+	 * @return {string} version descriptor
+	 */
+	static get version() {
+		return '0.1.1';
+	}
+
+	/**
+	 * Compare Mason version to an external version
+	 * @param  {string} a External version
+	 * @return {int}   1 if external is higher, -1 if Mason is higher, 0 otherwise
+	 */
+	compareVersion(a) {
+		let b = this.version;
+
+		if (a === b) {
+			return 0;
+		}
+
+		let a_parts = a.split(".");
+		let b_parts = b.split(".");
+
+		let len = Math.min(a_parts.length, b_parts.length);
+
+	    for (var i = 0; i < len; i++) {
+	        if (parseInt(a_parts[i]) > parseInt(b_parts[i])) {
+	        	return 1;
+	        } else if (parseInt(a_parts[i]) < parseInt(b_parts[i])) {
+	        	return -1;
+	        }
+	    }
+
+	    if (a_parts.length > b_parts.length) {
+	    	return 1;
+	    }
+
+	    if (a_parts.length < b_parts.length) {
+	    	return -1;
+	    }
+
+	    return 0;
 	}
 
 	/**
@@ -136,8 +181,13 @@ export default class Application {
 			let command = false;
 
 			try {
-				command = new obj(options, this.config, this);
+				if(obj.prototype && obj.prototype.hasOwnProperty('run')) {
+					command = new obj(options, this.config, this);
+				} else {
+					command = new MethodCommand(obj, options, this.config, this);
+				}
 			} catch(e) {
+				console.info(e);
 				throw "Invalid command object registered for " + cmd;
 			}
 
@@ -153,6 +203,14 @@ export default class Application {
 				console.log(util.inspect(e.stack, false, null));
 			}
 		}
+	}
+
+	/**
+	 * Set the configuration options for Mason
+	 * @param {object} config The configuration object
+	 */
+	setConfig(config) {
+		this.config = config;
 	}
 
 	/**
