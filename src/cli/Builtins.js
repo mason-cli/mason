@@ -12,7 +12,7 @@ export default (Mason) => {
 		}
 
 		run(resolve, reject) {
-			console.log('Mason version 1.0.0');
+			console.log('Mason version: ' + Mason.version());
 			resolve();
 		}
 	}
@@ -35,7 +35,7 @@ export default (Mason) => {
 					return;
 				}
 			}
-			
+
 			console.log('Mason - Available Commands');
 			console.log('---------------------------');
 			this.runner.commands.forEach((cmd,name) => {

@@ -25,7 +25,7 @@ export default class Application {
 	 * Get the current Mason version
 	 * @return {string} version descriptor
 	 */
-	static get version() {
+	version() {
 		return '0.1.1';
 	}
 
@@ -35,7 +35,7 @@ export default class Application {
 	 * @return {int}   1 if external is higher, -1 if Mason is higher, 0 otherwise
 	 */
 	compareVersion(a) {
-		let b = this.version;
+		let b = this.version();
 
 		if (a === b) {
 			return 0;
