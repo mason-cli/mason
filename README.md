@@ -10,8 +10,15 @@ You can load additional plugins with Mason by creating a `mason.config.js` file 
 
 ### Example Configuration:
 ```
-module.exports = {
-  plugins: ['mason.plugin.scaffold', './path/to/LocalPlugin']
+module.exports = function(Mason) { 
+	Mason.registerCommand('test', function(input, config, Mason, resolve, reject) {
+		console.log('Test!');
+		resolve();
+	});
+
+	return {
+  		plugins: ['mason.plugin.scaffold', './path/to/LocalPlugin']
+	};
 };
 ```
 In this example, mason.plugin.scaffold is a package installed from NPM and './path/to/LocalPlugin' is the path of a local js module.
