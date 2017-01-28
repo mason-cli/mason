@@ -206,8 +206,13 @@ export default class Application {
 		}
 	}
 
-	prompt(for) {
-		return prompt(for);
+	/**
+	 * Prompt the user for input
+	 * @param  {string} query The query to which the user will respond
+	 * @return {string}       The user's response to the query
+	 */
+	prompt(query) {
+		return prompt(query);
 	}
 
 	/**
