@@ -32,7 +32,7 @@ if(fs.existsSync(configPath)) {
 if(config.plugins) {
 	config.plugins.forEach((location) => {
 		if(location.substring(0, 2) == './' || location.substring(0, 2) == '.\\') {
-			location = process.cwd() + path.delimiter + location.substring(2);
+			location = process.cwd() + path.sep + location.substring(2);
 		}
 
 		let plugin = require(location);
