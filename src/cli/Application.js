@@ -1,6 +1,7 @@
 import Promise from 'es6-promise'
 import Command from './Command'
 import MethodCommand from './MethodCommand'
+import prompt from 'prompt-sync'
 
 import util from 'util'
 
@@ -203,6 +204,10 @@ export default class Application {
 				console.log(util.inspect(e.stack, false, null));
 			}
 		}
+	}
+
+	prompt(for) {
+		return prompt(for);
 	}
 
 	/**

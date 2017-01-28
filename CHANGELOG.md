@@ -1,3 +1,6 @@
+# 0.1.5
+Added "prompt" method
+
 # 0.1.2 - 0.1.4
 Package cleanup
 Cross-platform path support
