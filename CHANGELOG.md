@@ -1,5 +1,8 @@
-# 0.1.5
-Added "prompt" method
+# 0.1.53
+Fixed an issue with flags preceded by a single dash
+
+# 0.1.5 - 0.1.52
+Added "prompt" method & graceful failure
 
 # 0.1.2 - 0.1.4
 Package cleanup

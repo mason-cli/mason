@@ -18,8 +18,9 @@ export default class Input {
 		// Tokenize input
 		process.argv.forEach((val, index, array) => {
 			if(index >= skip) {
-				if(val.substr(0, 2) == '--' || val.substr(0,1) == '-') {
-					let arg = val.substr(2, val.length - 2);
+				let first_two = val.substr(0, 2);
+				if(first_two == '--' || val.substr(0,1) == '-') {
+					let arg = first_two == '--' ? val.substr(2, val.length - 2) : val.substr(1, val.length - 1);
 					if(arg.indexOf('=') !== -1) {
 						let parts = arg.split('=');
 						this._options[parts[0]] = parts[1];
