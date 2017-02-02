@@ -1,7 +1,9 @@
 import Promise from 'es6-promise'
 import Command from './Command'
 import MethodCommand from './MethodCommand'
-import prompt from 'prompt-sync'
+import Prompt from 'prompt-sync'
+
+const prompt = new Prompt();
 
 import util from 'util'
 
@@ -212,6 +214,10 @@ export default class Application {
 	 * @return {string}       The user's response to the query
 	 */
 	prompt(query) {
+		if(!process.stdin.setRawMode) {
+			throw "Invalid prompt. If using Cygwin/Babun on Windows, try running with CMD.";
+		}
+
 		return prompt(query);
 	}
 
