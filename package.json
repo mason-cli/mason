@@ -1,6 +1,6 @@
 {
   "name": "mason.cli",
-  "version": "0.1.53",
+  "version": "0.1.54",
   "description": "Mason is a lightweight and modular command line toolkit.",
   "author": "Andrew Ewing <drew@phenocode.com> (https://github.com/aewing)",
   "license": "MIT",
