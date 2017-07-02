@@ -234,7 +234,7 @@ export default class Application {
 	 * @param  {object} options options
 	 * @return {mixed}         result of child_process.spawn
 	 */
-	spawn(command, args, options) {
+	spawn(command, args = undefined, options = undefined) {
 		return child_process.spawn(command, args, options);
 	}
 
@@ -245,19 +245,19 @@ export default class Application {
 	 * @param  {object} options options
 	 * @return {mixed}         result of child_process.fork
 	 */
-	fork(module, args, options) {
+	fork(module, args = undefined, options = undefined) {
 		return child_process.fork(module, args, options);
 	}
 
 	/**
 	 * Execute a command in a new prompt
 	 * @param  {string} command The command to execute
-	 * @param  {array} args    arguments
 	 * @param  {object} options options
+	 * @param  {function} callback callback
 	 * @return {mixed}         result of child_process.exec
 	 */
-	exec(command, args, options) {
-		return child_process.exec(command, args, options);
+	exec(command, options = undefined, callback = undefined) {
+		return child_process.exec(command, options, callback);
 	}
 
 	/**
