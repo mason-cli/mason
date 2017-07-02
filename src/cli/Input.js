@@ -7,8 +7,8 @@ export default class Input {
 	 * @param  {Number} skip The number of parameters to skip
 	 * @return {void}
 	 */
-	constructor(skip=0) {
-		this._command = '';
+	constructor(skip = 0) {
+		this._command = "";
 		this._bin = false;
 		this._file = false;
 		this._args = [];
@@ -17,12 +17,15 @@ export default class Input {
 
 		// Tokenize input
 		process.argv.forEach((val, index, array) => {
-			if(index >= skip) {
+			if (index >= skip) {
 				let first_two = val.substr(0, 2);
-				if(first_two == '--' || val.substr(0,1) == '-') {
-					let arg = first_two == '--' ? val.substr(2, val.length - 2) : val.substr(1, val.length - 1);
-					if(arg.indexOf('=') !== -1) {
-						let parts = arg.split('=');
+				if (first_two == "--" || val.substr(0, 1) == "-") {
+					let arg =
+						first_two == "--"
+							? val.substr(2, val.length - 2)
+							: val.substr(1, val.length - 1);
+					if (arg.indexOf("=") !== -1) {
+						let parts = arg.split("=");
 						this._options[parts[0]] = parts[1];
 					} else {
 						this._flags.push(arg);
@@ -35,15 +38,15 @@ export default class Input {
 
 		let a = this._args.shift();
 		let n = false;
-		if(a.indexOf('node') != -1) {
+		if (a.indexOf("node") != -1) {
 			n = true;
 			this._bin = a;
 			a = this._args.shift();
 		}
-		if(n) {
+		if (n) {
 			this._file = a;
 			a = this._args.shift();
-		} else if(a.indexOf('mason') == 0) {
+		} else if (a.indexOf("mason") == 0) {
 			this._bin = a;
 			a = this._args.shift();
 		}

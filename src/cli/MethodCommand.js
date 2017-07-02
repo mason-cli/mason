@@ -1,15 +1,15 @@
-'use strict'
+"use strict";
 
-import Command from './Command'
+import Command from "./Command";
 
 export default class MethodCommand extends Command {
-  constructor(method, input, conf, runner) {
-  	super(input, conf, runner);
+    constructor(method, input, conf, runner) {
+        super(input, conf, runner);
 
-  	this.method = method;
-  }
+        this.method = method;
+    }
 
-  run(resolve, reject) {
-  	this.method(this.input, this.conf, this.runner, resolve, reject);
-  }
+    run(resolve, reject) {
+        this.method(this.input, this.conf, this.runner, resolve, reject);
+    }
 }

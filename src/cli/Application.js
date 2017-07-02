@@ -1,11 +1,12 @@
-import Promise from 'es6-promise'
-import Command from './Command'
-import MethodCommand from './MethodCommand'
-import Prompt from 'prompt-sync'
+import Promise from "es6-promise";
+import Command from "./Command";
+import MethodCommand from "./MethodCommand";
+import Prompt from "prompt-sync";
+import child_process from "child_process";
 
 const prompt = new Prompt();
 
-import util from 'util'
+import util from "util";
 
 /**
  * Mason command line application class
@@ -16,7 +17,7 @@ export default class Application {
 	 * @param  {object} config The configuration object
 	 * @return {void}
 	 */
-	constructor(config={}) {
+	constructor(config = {}) {
 		this.config = config;
 		this.commands = new Map();
 		this.events = new Map();
@@ -29,7 +30,7 @@ export default class Application {
 	 * @return {string} version descriptor
 	 */
 	version() {
-		return '0.1.1';
+		return "0.1.1";
 	}
 
 	/**
@@ -49,23 +50,23 @@ export default class Application {
 
 		let len = Math.min(a_parts.length, b_parts.length);
 
-	    for (var i = 0; i < len; i++) {
-	        if (parseInt(a_parts[i]) > parseInt(b_parts[i])) {
-	        	return 1;
-	        } else if (parseInt(a_parts[i]) < parseInt(b_parts[i])) {
-	        	return -1;
-	        }
-	    }
+		for (var i = 0; i < len; i++) {
+			if (parseInt(a_parts[i]) > parseInt(b_parts[i])) {
+				return 1;
+			} else if (parseInt(a_parts[i]) < parseInt(b_parts[i])) {
+				return -1;
+			}
+		}
 
-	    if (a_parts.length > b_parts.length) {
-	    	return 1;
-	    }
+		if (a_parts.length > b_parts.length) {
+			return 1;
+		}
 
-	    if (a_parts.length < b_parts.length) {
-	    	return -1;
-	    }
+		if (a_parts.length < b_parts.length) {
+			return -1;
+		}
 
-	    return 0;
+		return 0;
 	}
 
 	/**
@@ -76,7 +77,7 @@ export default class Application {
 	 */
 	registerCommand(name, runner) {
 		// if(runner.prototype instanceof Command) { // TODO: Why doesn't this work?
-		if(typeof(runner) == 'function') {
+		if (typeof runner == "function") {
 			this.commands.set(name, runner);
 		} else {
 			throw "Invalid command object registered: " + name;
@@ -87,18 +88,18 @@ export default class Application {
 	 * Get a command class by name
 	 * @param  {string} name 		The name of the command
 	 * @param  {bool} gracefully 	Whether or not to fail gracefully
-	 * 
+	 *
 	 * @return {Command}      		The command class
 	 */
 	getCommand(name, gracefully) {
-		if(this.commands.has(name)) {
+		if (this.commands.has(name)) {
 			return this.commands.get(name);
 		}
 
-		if(gracefully) {
+		if (gracefully) {
 			return false;
 		} else {
-			throw "Command not found" + (name ? (": '" + name + "'") : "");
+			throw "Command not found" + (name ? ": '" + name + "'" : "");
 		}
 	}
 
@@ -109,7 +110,7 @@ export default class Application {
 	 * @return {number}            The index of the callback method
 	 */
 	on(event, callback) {
-		if(!this.events.has(event)) {
+		if (!this.events.has(event)) {
 			this.events.set(event, []);
 		}
 		let callbacks = this.events.get(event);
@@ -126,9 +127,9 @@ export default class Application {
 	 * @return {void}
 	 */
 	cancel(event, index) {
-		if(this.events.has(event)) {
+		if (this.events.has(event)) {
 			let events = this.events.get(event);
-			if(events[index]) {
+			if (events[index]) {
 				events[index] = false;
 			}
 		}
@@ -140,10 +141,10 @@ export default class Application {
 	 * @param  {Object} props The properties to pass to registered callbacks
 	 * @return {void}
 	 */
-	emit(event, props={}) {
+	emit(event, props = {}) {
 		let continuing = true;
-		this.events.get(event).forEach((callback) => {
-			if(continuing && typeof callback == 'function') {
+		this.events.get(event).forEach(callback => {
+			if (continuing && typeof callback == "function") {
 				continuing = !!callback(props);
 			}
 		});
@@ -184,25 +185,30 @@ export default class Application {
 			let command = false;
 
 			try {
-				if(obj.prototype && obj.prototype.hasOwnProperty('run')) {
+				if (obj.prototype && obj.prototype.hasOwnProperty("run")) {
 					command = new obj(options, this.config, this);
 				} else {
-					command = new MethodCommand(obj, options, this.config, this);
+					command = new MethodCommand(
+						obj,
+						options,
+						this.config,
+						this
+					);
 				}
-			} catch(e) {
+			} catch (e) {
 				console.info(e);
 				throw "Invalid command object registered for " + cmd;
 			}
 
-			if(command) {
+			if (command) {
 				let execution = new Promise(command.run);
 				this.promises.push(execution);
 				return execution;
 			}
 			throw "Invalid command requested: " + cmd;
-		} catch(e) {
-			console.error('Error! ', e.message ? e.message : e);
-			if(e.stack) {
+		} catch (e) {
+			console.error("Error! ", e.message ? e.message : e);
+			if (e.stack) {
 				console.log(util.inspect(e.stack, false, null));
 			}
 		}
@@ -214,11 +220,52 @@ export default class Application {
 	 * @return {string}       The user's response to the query
 	 */
 	prompt(query) {
-		if(!process.stdin.setRawMode) {
+		if (!process.stdin.setRawMode) {
 			throw "Invalid prompt. If using Cygwin/Babun on Windows, try running with CMD.";
 		}
 
 		return prompt(query);
+	}
+
+	/**
+	 * Spawn a new process
+	 * @param  {string} command The command to execute
+	 * @param  {array} args    arguments
+	 * @param  {object} options options
+	 * @return {mixed}         result of child_process.spawn
+	 */
+	spawn(command, args, options) {
+		return child_process.spawn(command, args, options);
+	}
+
+	/**
+	 * Fork a new module
+	 * @param  {string} module  The module to fork
+	 * @param  {array} args    arguments
+	 * @param  {object} options options
+	 * @return {mixed}         result of child_process.fork
+	 */
+	fork(module, args, options) {
+		return child_process.fork(module, args, options);
+	}
+
+	/**
+	 * Execute a command in a new prompt
+	 * @param  {string} command The command to execute
+	 * @param  {array} args    arguments
+	 * @param  {object} options options
+	 * @return {mixed}         result of child_process.exec
+	 */
+	exec(command, args, options) {
+		return child_process.exec(command, args, options);
+	}
+
+	/**
+	 * A shortcut to retrieve child_process without requiring it elsewhere
+	 * @return {mixed} child_process
+	 */
+	child_process() {
+		return child_process;
 	}
 
 	/**

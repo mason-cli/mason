@@ -9,11 +9,11 @@ For command line usage, install Mason globally:
 You can load additional plugins with Mason by creating a `mason.config.js` file in your project directory.
 
 ### Example Configuration:
-```
-module.exports = function(Mason) { 
+`mason.config.js`
+```js
+module.exports = function(Mason) {
 	Mason.registerCommand('test', function(input, config, Mason, resolve, reject) {
-		console.log('Test!');
-		resolve();
+        Mason.spawn(`${__dirname}/node_modules/.bin/jest`);
 	});
 
 	return {
@@ -21,6 +21,16 @@ module.exports = function(Mason) {
 	};
 };
 ```
+## Now with support for Babel!
+`mason.babel.js`
+```js
+export default (Mason) => {
+    Mason.registerCommand('test', (input, config, Mason, resolve, reject) => {
+        Mason.spawn(`${__dirname}/node_modules/.bin/jest`);
+    });
+};
+```
+
 In this example, mason.plugin.scaffold is a package installed from NPM and './path/to/LocalPlugin' is the path of a local js module.
 
 ## Usage
