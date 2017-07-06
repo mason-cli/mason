@@ -4,7 +4,9 @@ import MethodCommand from "./MethodCommand";
 import Prompt from "prompt-sync";
 import child_process from "child_process";
 
+const version = require("../../package.json").version;
 const prompt = new Prompt();
+const exec = util.promisify(child_process.exec);
 
 import util from "util";
 
@@ -22,7 +24,6 @@ export default class Application {
 		this.commands = new Map();
 		this.events = new Map();
 		this.data = new Map();
-		this.promises = [];
 	}
 
 	/**
@@ -30,7 +31,7 @@ export default class Application {
 	 * @return {string} version descriptor
 	 */
 	version() {
-		return "0.1.1";
+		return version;
 	}
 
 	/**
@@ -166,11 +167,9 @@ export default class Application {
 		delete this.commands;
 		delete this.data;
 		delete this.events;
-		delete this.promises;
 		this.commands = new Map();
 		this.events = new Map();
 		this.data = new Map();
-		this.promises = [];
 	}
 
 	/**
@@ -179,21 +178,16 @@ export default class Application {
 	 * @param  {object} options The command properties
 	 * @return {mixed}			The command execution promise
 	 */
-	run(cmd, options) {
+	async run(cmd, options) {
 		try {
 			let obj = this.getCommand(cmd);
 			let command = false;
 
 			try {
 				if (obj.prototype && obj.prototype.hasOwnProperty("run")) {
-					command = new obj(options, this.config, this);
+					command = new obj(this);
 				} else {
-					command = new MethodCommand(
-						obj,
-						options,
-						this.config,
-						this
-					);
+					command = new MethodCommand(obj);
 				}
 			} catch (e) {
 				console.info(e);
@@ -201,10 +195,9 @@ export default class Application {
 			}
 
 			if (command) {
-				let execution = new Promise(command.run);
-				this.promises.push(execution);
-				return execution;
+				return await command.run(options, this.config);
 			}
+
 			throw "Invalid command requested: " + cmd;
 		} catch (e) {
 			console.error("Error! ", e.message ? e.message : e);
@@ -257,7 +250,21 @@ export default class Application {
 	 * @return {mixed}         result of child_process.exec
 	 */
 	exec(command, options = undefined, callback = undefined) {
-		return child_process.exec(command, options, callback);
+		return new Promise((resolve, reject) => {
+			return child_process.exec(
+				command,
+				options,
+				(err, stdout, stderr) => {
+					if (err) {
+						reject(err);
+					} else {
+						if (stdout) console.log(`${stdout}`);
+						if (stderr) console.log(`${stderr}`);
+						resolve();
+					}
+				}
+			);
+		});
 	}
 
 	/**
@@ -274,15 +281,5 @@ export default class Application {
 	 */
 	setConfig(config) {
 		this.config = config;
-	}
-
-	/**
-	 * The conclusion of all registered promises
-	 * @param  {function} then 	The function to execute if all promises resolve
-	 * @param  {function} err  	The function to execute if one or more promises rejected
-	 * @return {Promise}		A promise containing all other promises
-	 */
-	finally(then, err) {
-		return Promise.all(this.promises).then(then).catch(err);
 	}
 }

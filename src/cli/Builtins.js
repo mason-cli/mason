@@ -11,9 +11,8 @@ export default Mason => {
 			return "Displays the current Mason build version";
 		}
 
-		run(resolve, reject) {
+		run(input, config) {
 			console.log("Mason version: " + Mason.version());
-			resolve();
 		}
 	}
 
@@ -22,10 +21,10 @@ export default Mason => {
 			return "Displays this help text";
 		}
 
-		run(resolve, reject) {
-			if (this.input.args.length) {
-				let cmd = this.input.args[0];
-				let command = this.runner.getCommand(cmd, true);
+		run(input, config) {
+			if (input.args.length) {
+				let cmd = input.args[0];
+				let command = Mason.getCommand(cmd, true);
 				if (command) {
 					console.log("Mason - " + cmd + " Help");
 					console.log("---------------------------");
@@ -38,7 +37,7 @@ export default Mason => {
 
 			console.log("Mason - Available Commands");
 			console.log("---------------------------");
-			this.runner.commands.forEach((cmd, name) => {
+			Mason.commands.forEach((cmd, name) => {
 				console.log(
 					name +
 						": " +
@@ -48,7 +47,6 @@ export default Mason => {
 				);
 			});
 			console.log("---------------------------");
-			resolve();
 		}
 	}
 

@@ -2,6 +2,8 @@
 
 "use strict";
 
+require("babel-register");
+require("babel-polyfill");
 require("app-module-path").addPath(process.cwd() + "/node_modules");
 
 const fs = require("fs");
@@ -21,7 +23,6 @@ var babelConfig = `${process.cwd()}/mason.babel.js`;
 if (fs.existsSync(standardConfig)) {
 	config = require(standardConfig);
 } else if (fs.existsSync(babelConfig)) {
-	require("babel-register");
 	config = require(babelConfig).default;
 }
 
@@ -54,19 +55,17 @@ if (config.plugins) {
 
 try {
 	var input = new Input();
-	Mason.run(input.command(), input.all(), config);
+	Mason.run(input.command(), input.all(), config)
+		.catch(err => {
+			console.error(util.inspect(err, false, null));
+		})
+		.then(() => {
+			console.log("Done.");
+			process.exit();
+		});
 } catch (e) {
 	console.error("Error!", e.message ? e.message : e);
 	if (e.stack) {
 		console.log(util.inspect(e.stack, false, null));
 	}
 }
-
-Mason.finally(
-	() => {
-		// console.log(' ');
-	},
-	err => {
-		console.error("Error!", util.inspect(err, false, null));
-	}
-);

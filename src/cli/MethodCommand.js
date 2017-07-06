@@ -3,13 +3,19 @@
 import Command from "./Command";
 
 export default class MethodCommand extends Command {
-    constructor(method, input, conf, runner) {
-        super(input, conf, runner);
-
+    constructor(method) {
+        super();
         this.method = method;
     }
 
-    run(resolve, reject) {
-        this.method(this.input, this.conf, this.runner, resolve, reject);
+    async run(input, conf) {
+        return await this.method(input, conf);
+    }
+
+    static help() {
+        return (
+            "Inline commands do not offer help text. " +
+            "Use the Command class instead."
+        );
     }
 }
