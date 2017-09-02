@@ -179,7 +179,7 @@ export default class Application {
 	 */
   async run(cmd, options) {
     try {
-      let obj = this.getCommand(cmd);
+      const obj = this.getCommand(cmd);
       let command = false;
 
       try {

@@ -227,6 +227,7 @@ export default Mason => {
   // Allow registration of scaffold templates from other plugins
   Mason.on("addScaffoldTemplate", opt => {
     if (opt.hasOwnProperty("name") && opt.hasOwnProperty("location")) {
+      console.log(`> Scaffold \t Template registered: ${opt.name}`);
       Mason.data.get("scaffold.templates").set(opt.name, opt.location);
     } else {
       console.error(

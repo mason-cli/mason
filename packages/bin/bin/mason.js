@@ -2,7 +2,19 @@
 
 "use strict";
 
-require("babel-register");
+require("babel-core/register", {
+  presets: [
+    [
+      "env",
+      {
+        targets: {
+          node: "current"
+        }
+      }
+    ],
+    "stage-0"
+  ]
+});
 require("babel-polyfill");
 require("app-module-path").addPath(process.cwd() + "/node_modules");
 
@@ -35,7 +47,7 @@ if (config) {
 }
 
 // Load plugins
-if (config.plugins) {
+if (config && config.plugins) {
   config.plugins.forEach(location => {
     if (location.substring(0, 2) == "./" || location.substring(0, 2) == ".\\") {
       location = process.cwd() + path.sep + location.substring(2);
@@ -49,13 +61,12 @@ if (config.plugins) {
 }
 
 try {
-  var input = new Input();
+  var input = new Input(process.argv);
   Mason.run(input.command(), input.all(), config)
     .catch(err => {
       console.error(util.inspect(err, false, null));
     })
     .then(() => {
-      console.log("Done.");
       process.exit();
     });
 } catch (e) {
