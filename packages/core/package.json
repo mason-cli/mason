@@ -1,12 +1,12 @@
 {
   "name": "@mason-cli/core",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Mason is a lightweight and modular command line toolkit.",
   "author": "Andrew Ewing <drew@phenocode.com> (https://github.com/aewing)",
   "license": "MIT",
   "access": "public",
   "repository": "aewing/mason",
-  "main": "lib/mason.js",
+  "main": "src/mason.js",
   "scripts": {
     "build": "babel src -d lib",
     "build-example": "babel example/src -d example/lib"
@@ -23,7 +23,7 @@
     "template"
   ],
   "files": [
-    "lib"
+    "src/"
   ],
   "dependencies": {
     "app-module-path": "^2.2.0",

@@ -1,6 +1,6 @@
 {
   "name": "@mason-cli/bin",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Binary package for the Mason CLI toolkit.",
   "author": "Andrew Ewing <drew@phenocode.com> (https://github.com/aewing)",
   "license": "MIT",
@@ -29,7 +29,7 @@
     "mason": "./bin/mason.js"
   },
   "dependencies": {
-    "@mason-cli/core": "^2.0.1",
+    "@mason-cli/core": "^2.0.2",
     "app-module-path": "^2.2.0",
     "babel-polyfill": "^6.23.0",
     "babel-register": "^6.24.1"
