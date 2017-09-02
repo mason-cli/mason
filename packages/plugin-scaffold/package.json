@@ -1,11 +1,11 @@
 {
   "name": "@mason-cli/plugin-scaffold",
-  "version": "2.0.2",
+  "version": "2.0.5",
   "description": "Scaffolding plugin for Mason CLI",
   "author": "Andrew Ewing <drew@phenocode.com> (https://github.com/aewing)",
   "license": "MIT",
   "repository": "aewing/mason-scaffold",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "tags": [
     "mason",
     "command",
@@ -14,10 +14,10 @@
     "plugin"
   ],
   "files": [
-    "src/"
+    "lib/"
   ],
   "dependencies": {
-    "@mason-cli/core": "^2.0.2",
+    "@mason-cli/core": "^2.0.5",
     "lodash": "^4.17.4"
   },
   "devDependencies": {

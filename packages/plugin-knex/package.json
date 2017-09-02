@@ -1,20 +1,20 @@
 {
   "name": "@mason-cli/plugin-knex",
-  "version": "2.0.2",
-  "main": "src/index.js",
+  "version": "2.0.5",
+  "main": "lib/index.js",
   "scripts": {
     "build": "babel src/ -d lib/",
     "watch": "babel src/ -d lib/ --watch"
   },
   "files": [
-    "src/",
+    "lib/",
     "templates/"
   ],
   "repository": "https://github.com/mason-cli/mason-plugin-knex.git",
   "author": "Andrew Ewing <drew@phenocode.com>",
   "license": "MIT",
   "dependencies": {
-    "@mason-cli/core": "^2.0.2",
+    "@mason-cli/core": "^2.0.5",
     "knex": "^0.13.0"
   },
   "devDependencies": {

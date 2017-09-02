@@ -143,11 +143,14 @@ export default class Application {
 	 */
   emit(event, props = {}) {
     let continuing = true;
-    this.events.get(event).forEach(callback => {
-      if (continuing && typeof callback == "function") {
-        continuing = !!callback(props);
-      }
-    });
+    let events = this.events.get(event);
+    if (events) {
+      events.forEach(callback => {
+        if (continuing && typeof callback == "function") {
+          continuing = !!callback(props);
+        }
+      });
+    }
   }
 
   /**

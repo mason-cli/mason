@@ -2,20 +2,15 @@
 
 "use strict";
 
-require("babel-core/register", {
-  presets: [
-    [
-      "env",
-      {
-        targets: {
-          node: "current"
-        }
-      }
-    ],
-    "stage-0"
-  ]
-});
-require("babel-polyfill");
+let babelSupport = true;
+try {
+  require("babel-core/register", {
+    presets: ["env", "stage-0"]
+  });
+  require("babel-polyfill");
+} catch (e) {
+  babelSupport = false;
+}
 require("app-module-path").addPath(process.cwd() + "/node_modules");
 
 const fs = require("fs");
@@ -33,7 +28,13 @@ var babelConfig = `${process.cwd()}/mason.babel.js`;
 if (fs.existsSync(standardConfig)) {
   config = require(standardConfig);
 } else if (fs.existsSync(babelConfig)) {
-  config = require(babelConfig).default;
+  if (!babelSupport) {
+    console.log(
+      "mason.babel.js found, but a .babelrc was not... Unable to load."
+    );
+  } else {
+    config = require(babelConfig).default;
+  }
 }
 
 if (config) {
