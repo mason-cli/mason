@@ -1,5 +1,5 @@
 {
-  "name": "mason.plugin.knex",
+  "name": "@mason-cli/plugin-knex",
   "version": "2.0.1",
   "main": "lib/index.js",
   "scripts": {

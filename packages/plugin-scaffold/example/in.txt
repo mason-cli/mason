@@ -1,0 +1,2 @@
+This is a demonstration. When replaced, the following text should read "Look, it worked!":
+@@{foo}@@ @@{bar}@@ @@{baz}@@
