@@ -4,6 +4,7 @@
   "description": "Mason is a lightweight and modular command line toolkit.",
   "author": "Andrew Ewing <drew@phenocode.com> (https://github.com/aewing)",
   "license": "MIT",
+  "access": "public",
   "repository": "aewing/mason",
   "main": "lib/mason.js",
   "scripts": {

@@ -6,6 +6,7 @@
   "license": "MIT",
   "repository": "mason-cli/mason",
   "main": "bin/mason.js",
+  "access": "public",
   "scripts": {
     "build": "babel src -d lib",
     "build-example": "babel example/src -d example/lib"
