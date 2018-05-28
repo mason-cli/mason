@@ -1,6 +1,6 @@
 {
   "name": "@mason-cli/plugin-lerna",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "main": "lib/index.js",
   "scripts": {
     "build": "babel src/ -d lib/",
@@ -13,9 +13,12 @@
   "author": "Andrew Ewing <drew@phenocode.com>",
   "license": "MIT",
   "dependencies": {
-    "@mason-cli/core": "^2.1.0"
+    "@mason-cli/core": "^2.1.1"
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

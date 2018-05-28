@@ -1,12 +1,12 @@
 {
   "name": "scaffold-example",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "main": "index.js",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@mason-cli/bin": "^2.1.0",
-    "@mason-cli/plugin-knex": "^2.1.0",
-    "@mason-cli/plugin-scaffold": "^2.1.0"
+    "@mason-cli/bin": "^2.1.1",
+    "@mason-cli/plugin-knex": "^2.1.1",
+    "@mason-cli/plugin-scaffold": "^2.1.1"
   }
 }
