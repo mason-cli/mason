@@ -1,5 +1,5 @@
 {
-  "name": "@mason-cli/plugin-knex",
+  "name": "@mason-cli/plugin-lerna",
   "version": "2.1.0",
   "main": "lib/index.js",
   "scripts": {
@@ -7,15 +7,13 @@
     "watch": "babel src/ -d lib/ --watch"
   },
   "files": [
-    "lib/",
-    "templates/"
+    "lib/"
   ],
-  "repository": "https://github.com/mason-cli/mason-plugin-knex.git",
+  "repository": "https://github.com/mason-cli/mason.git",
   "author": "Andrew Ewing <drew@phenocode.com>",
   "license": "MIT",
   "dependencies": {
-    "@mason-cli/core": "^2.1.0",
-    "knex": "^0.13.0"
+    "@mason-cli/core": "^2.1.0"
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.0"

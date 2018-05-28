@@ -1,14 +1,42 @@
 {
-  "name": "@mason-cli/core",
-  "version": "2.0.5",
-  "description": "Mason is a lightweight and modular command line toolkit.",
-  "author": "Andrew Ewing <drew@phenocode.com> (https://github.com/aewing)",
-  "license": "MIT",
+  "_id": "@mason-cli/core@2.1.0",
+  "_inBundle": true,
+  "_location": "/@mason-cli/bin/@mason-cli/core",
+  "_phantomChildren": {},
+  "_requiredBy": [
+    "/@mason-cli/bin"
+  ],
   "access": "public",
-  "repository": "aewing/mason",
+  "author": {
+    "name": "Andrew Ewing",
+    "email": "drew@phenocode.com",
+    "url": "https://github.com/aewing"
+  },
+  "bugs": {
+    "url": "https://github.com/aewing/mason/issues"
+  },
+  "dependencies": {
+    "app-module-path": "^2.2.0",
+    "prompt-sync": "^4.1.4"
+  },
+  "description": "Mason is a lightweight and modular command line toolkit.",
+  "devDependencies": {
+    "babel-preset-env": "^1.6.0"
+  },
+  "files": [
+    "lib/"
+  ],
+  "homepage": "https://github.com/aewing/mason#readme",
+  "license": "MIT",
   "main": "lib/mason.js",
+  "name": "@mason-cli/core",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aewing/mason.git"
+  },
   "scripts": {
     "build": "babel src -d lib",
+    "watch": "babel -w src -d lib",
     "build-example": "babel example/src -d example/lib"
   },
   "tags": [
@@ -22,14 +50,5 @@
     "scaffold",
     "template"
   ],
-  "files": [
-    "lib/"
-  ],
-  "dependencies": {
-    "app-module-path": "^2.2.0",
-    "prompt-sync": "^4.1.4"
-  },
-  "devDependencies": {
-    "babel-preset-env": "^1.6.0"
-  }
+  "version": "2.1.0"
 }
